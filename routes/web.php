@@ -2,6 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProductController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,26 +20,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home.index');
-});
+Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/cart', function () {
-    return view('cart.index');
-});
+Route::get('/cart', [CartController::class, 'index']);
 
-Route::get('/categories', function () {
-    return view('categories.index');
-});
+Route::get('/categories', [CategoriesController::class, 'index']);
 
-Route::get('/checkout', function () {
-    return view('checkout.index');
-});
+Route::get('/checkout', [CheckoutController::class, 'index']);
 
-Route::get('/contact', function () {
-    return view('contact.index');
-});
+Route::get('/contact', [ContactController::class, 'index']);
 
-Route::get('/product', function () {
-    return view('product.index');
-});
+Route::get('/product', [ProductController::class, 'index']);
