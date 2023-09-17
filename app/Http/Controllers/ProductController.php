@@ -7,14 +7,12 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index($category, $product_id)
     {
-        $products = Product::all();
-        foreach ($products as $product) {
-            echo 'Title: ' . $product->title;
-            echo "<br>";
-        }
+        $item = Product::where('id', $product_id)->first();
 
-        // return view('product.index');
+        return view('product.index', [
+            'item' => $item
+        ]);
     }
 }

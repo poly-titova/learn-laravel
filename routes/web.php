@@ -30,4 +30,4 @@ Route::get('/checkout', [CheckoutController::class, 'index']);
 
 Route::get('/contact', [ContactController::class, 'index']);
 
-Route::get('/product', [ProductController::class, 'index']);
+Route::get('/{category}/{product_id}', [ProductController::class, 'index'])->name('showProduct');

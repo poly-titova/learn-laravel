@@ -2,19 +2,28 @@
 
 @section('title', 'Product')
 
+@section('custom_css')
+	<link rel="stylesheet" type="text/css" href="/styles/product.css">
+	<link rel="stylesheet" type="text/css" href="/styles/product_responsive.css">
+@endsection
+
+@section('custom_js')
+	<script src="/js/product.js"></script>
+@endsection
+
 @section('content')
 	<!-- Home -->
 
 	<div class="home">
 		<div class="home_container">
-			<div class="home_background" style="background-image:url(images/categories.jpg)"></div>
+			<div class="home_background" style="background-image:url(/images/categories.jpg)"></div>
 			<div class="home_content_container">
 				<div class="container">
 					<div class="row">
 						<div class="col">
 							<div class="home_content">
-								<div class="home_title">Smart Phones<span>.</span></div>
-								<div class="home_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a ultricies metus. Sed nec molestie eros. Sed viverra velit venenatis fermentum luctus.</p></div>
+								<div class="home_title">{{ $item->title }}<span>.</span></div>
+								<div class="home_text"><p>{{ $item->description }}</p></div>
 							</div>
 						</div>
 					</div>
@@ -32,12 +41,28 @@
 				<!-- Product Image -->
 				<div class="col-lg-6">
 					<div class="details_image">
-						<div class="details_image_large"><img src="images/details_1.jpg" alt=""><div class="product_extra product_new"><a href="categories.html">New</a></div></div>
+						@php
+							$image = '';
+							if(count($item->images) > 0){
+									$image = $item->images[0]['img'];
+							} else {
+									$image = 'no_image.png';
+							}
+						@endphp
+
+						<div class="details_image_large"><img src="/images/{{$image}}" alt="{{$item->title}}"><div class="product_extra product_new"><a href="categories.html">New</a></div></div>
 						<div class="details_image_thumbnails d-flex flex-row align-items-start justify-content-between">
-							<div class="details_image_thumbnail active" data-image="images/details_1.jpg"><img src="images/details_1.jpg" alt=""></div>
-							<div class="details_image_thumbnail" data-image="images/details_2.jpg"><img src="images/details_2.jpg" alt=""></div>
-							<div class="details_image_thumbnail" data-image="images/details_3.jpg"><img src="images/details_3.jpg" alt=""></div>
-							<div class="details_image_thumbnail" data-image="images/details_4.jpg"><img src="images/details_4.jpg" alt=""></div>
+
+							@if($image == 'no_image.png')
+							@else
+								@foreach($item->images as $img)
+										@if($loop->first)
+												<div class="details_image_thumbnail active" data-image="/images/{{$img['img']}}"><img src="/images/{{$img['img']}}" alt="{{$item->title}}"></div>
+										@else
+												<div class="details_image_thumbnail" data-image="/images/{{$img['img']}}"><img src="/images/{{$img['img']}}" alt="{{$item->title}}"></div>
+										@endif
+								@endforeach
+							@endif
 						</div>
 					</div>
 				</div>
@@ -45,17 +70,25 @@
 				<!-- Product Content -->
 				<div class="col-lg-6">
 					<div class="details_content">
-						<div class="details_name">Smart Phone</div>
-						<div class="details_discount">$890</div>
-						<div class="details_price">$670</div>
+						<div class="details_name">{{ $item->title }}</div>
+						@if($item->new_price != null)
+							<div class="details_discount">${{ $item->price }}</div>
+							<div class="details_price">${{ $item->new_price }}</div>
+						@else
+							<div class="details_price">${{ $item->price }}</div>
+						@endif
 
 						<!-- In Stock -->
 						<div class="in_stock_container">
 							<div class="availability">Availability:</div>
-							<span>In Stock</span>
+							@if($item->in_stock != null)
+								<span>In Stock</span>
+							@else
+								<span style="color: red">None</span>
+							@endif
 						</div>
 						<div class="details_text">
-							<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Phasellus id nisi quis justo tempus mollis sed et dui. In hac habitasse platea dictumst. Suspendisse ultrices mauris diam. Nullam sed aliquet elit. Mauris consequat nisi ut mauris efficitur lacinia.</p>
+							<p>{{ $item->description }}</p>
 						</div>
 
 						<!-- Product Quantity -->
@@ -92,7 +125,7 @@
 						<div class="reviews_title"><a href="#">Reviews <span>(1)</span></a></div>
 					</div>
 					<div class="description_text">
-						<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Phasellus id nisi quis justo tempus mollis sed et dui. In hac habitasse platea dictumst. Suspendisse ultrices mauris diam. Nullam sed aliquet elit. Mauris consequat nisi ut mauris efficitur lacinia.</p>
+						<p>{{ $item->description }}</p>
 					</div>
 				</div>
 			</div>
@@ -115,7 +148,7 @@
 
 						<!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="images/product_1.jpg" alt=""></div>
+							<div class="product_image"><img src="/images/product_1.jpg" alt=""></div>
 							<div class="product_extra product_new"><a href="categories.html">New</a></div>
 							<div class="product_content">
 								<div class="product_title"><a href="product.html">Smart Phone</a></div>
@@ -125,7 +158,7 @@
 
 						<!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="images/product_2.jpg" alt=""></div>
+							<div class="product_image"><img src="/images/product_2.jpg" alt=""></div>
 							<div class="product_extra product_sale"><a href="categories.html">Sale</a></div>
 							<div class="product_content">
 								<div class="product_title"><a href="product.html">Smart Phone</a></div>
@@ -135,7 +168,7 @@
 
 						<!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="images/product_3.jpg" alt=""></div>
+							<div class="product_image"><img src="/images/product_3.jpg" alt=""></div>
 							<div class="product_content">
 								<div class="product_title"><a href="product.html">Smart Phone</a></div>
 								<div class="product_price">$710</div>
@@ -144,7 +177,7 @@
 
 						<!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="images/product_4.jpg" alt=""></div>
+							<div class="product_image"><img src="/images/product_4.jpg" alt=""></div>
 							<div class="product_content">
 								<div class="product_title"><a href="product.html">Smart Phone</a></div>
 								<div class="product_price">$330</div>
