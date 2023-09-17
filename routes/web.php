@@ -24,7 +24,7 @@ Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/cart', [CartController::class, 'index']);
 
-Route::get('/categories', [CategoriesController::class, 'index']);
+Route::get('/{category}', [CategoriesController::class, 'index'])->name('showCategory');
 
 Route::get('/checkout', [CheckoutController::class, 'index']);
 
