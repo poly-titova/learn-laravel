@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
 {
-    public function index()
+    public function index($category)
     {
-        return view('categories.index');
+        $category = Category::where('alias', $category)->first();
+
+        return view('categories.index', [
+            'category' => $category
+        ]);
     }
 }
